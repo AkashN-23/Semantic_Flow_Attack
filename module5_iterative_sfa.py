@@ -22,7 +22,7 @@ def hook_fn(module, input, output):
 hook_handle = model.backbone.body.layer4.register_forward_hook(hook_fn)
 
 # -------- Load Image --------
-img_path = r'/home/akashnagarajan/CODING_AND_PROJECTS/Semantic Form Attack/dog.jpg'
+img_path = r'path of the image'
 img = Image.open(img_path).convert('RGB')
 img_tensor_orig = F.to_tensor(img).unsqueeze(0).to(device)
 img_tensor_adv = img_tensor_orig.clone().detach()
