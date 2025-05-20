@@ -13,7 +13,7 @@ device = torch.device('cpu')  # Using CPU for now
 model = fasterrcnn_resnet50_fpn(pretrained=True).eval().to(device)
 
 # Load and preprocess the image
-img_path = r'/home/akashnagarajan/CODING_AND_PROJECTS/Semantic Form Attack/dog.jpg'
+img_path = r'path of the image'
 img = Image.open(img_path).convert('RGB')
 img_tensor = F.to_tensor(img).unsqueeze(0).to(device)
 
