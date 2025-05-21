@@ -4,6 +4,7 @@
 
 import torch
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
+from torchvision.transforms.functional import to_pil_image
 from torchvision.transforms import functional as F
 from PIL import Image, ImageDraw, ImageFont
 import matplotlib.pyplot as plt
@@ -44,7 +45,7 @@ device = torch.device('cpu')
 model = fasterrcnn_resnet50_fpn(pretrained=True).eval().to(device)
 
 # ---- Load Original Image ----
-img_path = r'path of the image'
+img_path = r'/home/akashnagarajan/CODING_AND_PROJECTS/semantic-flow-attack/dog.jpg'
 img = Image.open(img_path).convert('RGB')
 img_tensor_orig = F.to_tensor(img).unsqueeze(0).to(device)
 
@@ -74,6 +75,13 @@ outputs_adv = model(img_tensor_adv)
 # ---- Convert Tensors to PIL Images ----
 img_orig_pil = F.to_pil_image(img_tensor_orig.squeeze(0).cpu())
 img_adv_pil = F.to_pil_image(img_tensor_adv.squeeze(0).cpu())
+
+# Assuming `attacked_img_tensor` is the attacked image
+attacked_img = to_pil_image(img_tensor_adv.squeeze(0).cpu())
+attacked_img.save("test_images/attacked.jpg")
+print("✅ Attacked image saved at test_images/attacked.jpg")
+
+
 
 # ---- Draw Detections ----
 img_orig_drawn = draw_boxes(img_orig_pil, outputs_orig)
